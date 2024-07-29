@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выберите действие</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .action-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .action-container h2 {
+            margin-bottom: 20px;
+        }
+        .action-container button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .action-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="action-container">
+        <h2>Выберите действие:</h2>
+        <button onclick="register()">Регистрация</button>
+        <button onclick="login()">Войти</button>
+        <div id="cookieValue"></div> <!-- Элемент для вывода значения куки -->
+    </div>
+
+    <script>
+        function register() {
+            window.location.href = '/front/register.html';  // Редирект на страницу регистрации
+        }
+
+        function login() {
+            window.location.href = '/front/sign.html';  // Редирект на страницу входа
+        }
+    </script>
+</body>
+</html>

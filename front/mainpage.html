@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой профиль</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2c74e2;
+            color: white;
+            padding: 10px 20px;
+        }
+        .header img {
+            height: 40px;
+        }
+        .header nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .user-info {
+            position: relative;
+            cursor: pointer;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+        }
+        .dropdown a:hover {
+            background-color: #f4f4f4;
+        }
+        .profile-menu {
+            display: flex;
+            flex-direction: column;
+            width: 20%;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-right: 1px solid #ddd;
+        }
+        .profile-menu a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 5px 0;
+            background-color: #fff;
+        }
+        .profile-menu a:hover {
+            background-color: #e9e9e9;
+        }
+        .profile-content {
+            width: 75%;
+            padding: 20px;
+        }
+        .profile-content h2 {
+            margin-top: 0;
+        }
+        .profile-content .section {
+            margin-bottom: 20px;
+        }
+        .profile-content label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .profile-content input, .profile-content select {
+            flex: 1;
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .profile-content input[type="file"] {
+            border: none;
+        }
+        .save-btn {
+            padding: 8px 12px;
+            border: none;
+            background-color: #2c74e2;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .save-btn:hover {
+            background-color: #1a5bb8;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <a href="#">Навигатор</a>
+            <a href="#">Техническая поддержка</a>
+            <a href="#" onclick="handleMyRequests()">Мои заявки</a>
+            <a href="#">Новости</a>
+        </nav>
+        <div class="user-info" onclick="toggleDropdown()">
+            <span id="fullName">Пользователь</span>
+            <div class="dropdown" id="userDropdown">
+                <a href="#" onclick="navigateTo('/front/mainpage.html')">Мой профиль</a>
+                <a href="#" onclick="navigateTo('/front/appl.html')">Мои заявки</a>
+                <a href="#" onclick="handleLogout()">Выйти</a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div style="display: flex;">
+            <aside class="profile-menu">
+                <a href="#" onclick="navigateTo('/front/mainpage.html')">Мой профиль</a>
+                <a href="#" onclick="navigateTo('/front/appl.html')">Мои заявки</a>
+                <a href="#" onclick="navigateTo('/front/my_files.html')">Мои файлы</a>
+                <a href="#">Моя отчетность</a>
+                <a href="#">Мои диалоги</a>
+                <a href="#">Автоматические проверки</a>
+            </aside>
+            <div class="profile-content">
+                <h2>Мой профиль</h2>
+                <div class="section">
+                    <h3>Физические данные</h3>
+                    <label for="lastName">Фамилия</label>
+                    <div class="input-group">    
+                        <input type="text" id="lastName" name="lastName">
+                        <button class="save-btn" onclick="send('lastName')">Сохранить</button>
+                    </div>
+                    <label for="firstName">Имя</label>
+                    <div class="input-group">
+                        <input type="text" id="firstName" name="firstName">
+                        <button class="save-btn" onclick="send('firstName')">Сохранить</button>
+                    </div>
+                    <label for="middleName">Отчество</label>
+                    <div class="input-group">
+                        <input type="text" id="middleName" name="middleName">
+                        <button class="save-btn" onclick="send('middleName')">Сохранить</button>
+                    </div>
+                    <label for="birthDate">Дата рождения</label>
+                    <div class="input-group">
+                        <input type="date" id="birthDate" name="birthDate">
+                        <button class="save-btn" onclick="send('birthDate')">Сохранить</button>
+                    </div>
+                    <label for="gender">Пол</label>
+                    <div class="input-group">
+                        <select id="gender" name="gender">
+                            <option value="male">Мужской</option>
+                            <option value="female">Женский</option>
+                        </select>
+                        <button class="save-btn" onclick="send('gender')">Сохранить</button>
+                    </div>
+                    <label for="email">Адрес электронной почты</label>
+                    <div class="input-group">
+                        <input type="email" id="email" name="email">
+                        <button class="save-btn" onclick="send('email')">Сохранить</button>
+                    </div>
+                    <label for="additionalEmail">Дополнительный адрес электронной почты</label>
+                    <div class="input-group">
+                        <input type="email" id="additionalEmail" name="additionalEmail">
+                        <button class="save-btn" onclick="send('additionalEmail')">Сохранить</button>
+                    </div>
+                    <label for="phone">Рабочий телефон</label>
+                    <div class="input-group">
+                        <input type="tel" id="phone" name="phone">
+                        <button class="save-btn" onclick="send('phone')">Сохранить</button>
+                    </div>
+                    <label for="mobile">Мобильный телефон</label>
+                    <div class="input-group">
+                        <input type="tel" id="mobile" name="mobile">
+                        <button class="save-btn" onclick="send('mobile')">Сохранить</button>
+                    </div>
+                    <label for="inn">ИНН</label>
+                    <div class="input-group">
+                        <input type="text" id="inn" name="inn">
+                        <button class="save-btn" onclick="send('inn')">Сохранить</button>
+                    </div>
+                    <label for="snils">СНИЛС</label>
+                    <div class="input-group">
+                        <input type="text" id="snils" name="snils">
+                        <button class="save-btn" onclick="send('snils')">Сохранить</button>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>Реквизиты юридического лица</h3>
+                    <label for="companyName">Полное наименование организации</label>
+                    <div class="input-group">
+                        <input type="text" id="companyName" name="companyName">
+                        <button class="save-btn" onclick="send('companyName')">Сохранить</button>
+                    </div>
+                    <label for="shortCompanyName">Сокращенное наименование организации</label>
+                    <div class="input-group">
+                        <input type="text" id="shortCompanyName" name="shortCompanyName">
+                        <button class="save-btn" onclick="send('shortCompanyName')">Сохранить</button>
+                    </div>
+                    <label for="ogrn">ОГРН</label>
+                    <div class="input-group">
+                        <input type="text" id="ogrn" name="ogrn">
+                        <button class="save-btn" onclick="send('ogrn')">Сохранить</button>
+                    </div>
+                    <label for="inn2">ИНН</label>
+                    <div class="input-group">
+                        <input type="text" id="inn2" name="inn2">
+                        <button class="save-btn" onclick="send('inn2')">Сохранить</button>
+                    </div>
+                    <label for="kpp">КПП</label>
+                    <div class="input-group">
+                        <input type="text" id="kpp" name="kpp">
+                        <button class="save-btn" onclick="send('kpp')">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function getCookie(name) {
+            const cookies = document.cookie.split(';'); // Разбиваем строку кук на массив по разделителю ';'
+
+            for (let cookie of cookies) {
+                const parts = cookie.split('='); // Разбиваем каждую куку на имя и значение
+                const cookieName = parts[0].trim(); // Удаляем лишние пробелы
+                const cookieValue = parts[1]; // Значение куки
+
+                if (cookieName === name) {
+                    return cookieValue; // Возвращаем значение куки, если нашли куку с нужным именем
+                }
+            }
+
+            return null; // Возвращаем null, если кука с указанным именем не найдена
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var data = {
+                token: getCookie('token')
+            };
+            fetch('/get_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка HTTP ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('fullName').textContent = data.Login;
+                    document.getElementById('lastName').value = data.LastName;
+                    document.getElementById('firstName').value = data.FirstName;
+                    document.getElementById('middleName').value = data.MiddleName;
+                    document.getElementById('birthDate').value = data.BirthDate; 
+                    document.getElementById('gender').value = data.Gender;
+                    document.getElementById('email').value = data.Email;
+                    document.getElementById('additionalEmail').value = data.AdditionalEmail;
+                    document.getElementById('phone').value = data.Phone;
+                    document.getElementById('mobile').value = data.Mobile;
+                    document.getElementById('inn').value = data.INN;
+                    document.getElementById('snils').value = data.SNILS;
+                    document.getElementById('companyName').value = data.CompanyName;
+                    document.getElementById('shortCompanyName').value = data.ShortCompanyName;
+                    document.getElementById('ogrn').value = data.OGRN;
+                    document.getElementById('inn2').value = data.INN2;
+                    document.getElementById('kpp').value = data.KPP;
+                })
+                .catch(error => {
+                    console.error('Произошла ошибка при получении данных:', error);
+                    alert('Произошла ошибка при загрузке данных');
+                });
+        });
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.user-info')) {
+                const dropdown = document.getElementById('userDropdown');
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        function send(field) {
+        
+            var value = document.getElementById(field).value;
+
+            var data = {
+                field: field,
+                value: value,
+                token: getCookie('token')
+            };
+
+            // Выполняем запрос с помощью fetch
+            fetch('/save_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Обработка ответа от сервера
+                    console.log(data);
+                    // Редирект на другую страницу после успешного ответа
+                    // window.location.href = '/';
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                });
+        }
+
+        function handleLogout() {
+            document.cookie = "token" + '=; Max-Age=-1; Path=/';
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  diplom:
+    build: ./
+    command: ./diplom
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=lopik456
+
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=lopik456
+    ports:
+      - 5432:5432
+
+    

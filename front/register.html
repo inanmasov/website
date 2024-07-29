@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация и согласие на обработку персональных данных</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+        .form-container input,
+        .form-container textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: transparent;
+            color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            border: 1px solid transparent;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        .form-container button:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+            border-color: #007BFF;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container" id="registrationForm">
+        <h2>Регистрация и согласие на обработку персональных данных</h2>
+        <form id="registrationAndConsentForm" onsubmit="event.preventDefault(); submitForm();">
+            <input type="text" id="username" name="username" placeholder="Телефон, почта или СНИЛС" required>
+            <input type="password" id="password" name="password" placeholder="Пароль" required>
+
+            <input type="text" id="fullName" name="fullName" placeholder="ФИО" required>
+            <input type="text" id="address" name="address" placeholder="Адрес регистрации" required>
+            <input type="text" id="passportSeriesNumber" name="passportSeriesNumber" placeholder="Серия и номер паспорта" required>
+            <input type="date" id="passportIssueDate" name="passportIssueDate" required>
+            <input type="text" id="passportIssueCode" name="passportIssueCode" placeholder="Код подразделения" required>
+            <input type="text" id="passportIssueAuthority" name="passportIssueAuthority" placeholder="Кем выдан паспорт" required>
+            <textarea id="consentText" name="consentText" rows="4" readonly required>Я, нижеподписавшийся, даю согласие на обработку моих персональных данных, указанных в этой форме, в соответствии с условиями политики конфиденциальности.
+            </textarea>
+
+            <div class="button-container">
+                <button type="button" onclick="goBack()">Назад</button>
+                <button type="submit">Зарегистрироваться</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function submitForm() {
+            var Data = {
+                login: document.getElementById("username").value,
+                password: document.getElementById("password").value,
+                fullName: document.getElementById("fullName").value,
+                address: document.getElementById("address").value,
+                passportSeriesNumber: document.getElementById("passportSeriesNumber").value,
+                passportIssueDate: document.getElementById("passportIssueDate").value,
+                passportIssueCode: document.getElementById("passportIssueCode").value,
+                passportIssueAuthority: document.getElementById("passportIssueAuthority").value,
+                consentText: document.getElementById("consentText").value.trim()
+            };
+
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Обработка ответа от сервера
+                console.log(data);
+                // Редирект на другую страницу после успешного ответа
+                window.location.href = '/';
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+        }
+
+        function goBack() {
+            window.location.href = '/'; // Редирект на главную страницу
+        }
+    </script>
+</body>
+</html>
